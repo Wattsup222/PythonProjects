@@ -1,54 +1,24 @@
-import time
-from random import uniform
+import random
 
 
-def welcome_statement():
-    message = "Welcome to Starlight City Casino"
-    message_length = len(message)
-    symbol_row = "*" * message_length
-    print(f"{symbol_row}\n{message}\n{symbol_row}")
+class Card:
+    def __init__(self, suite, value):
+        self.suite = suite
+        self.value = value
+
+    def test(self):
+        print(f"{self.value}{self.suite}")
 
 
-def setup():
-    starting_capitol = round(uniform(100, 10000), 2)
-    return starting_capitol
+values = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K')
+suites = ("♣️", "♠️", "♦️", "♥️")
 
+cards = []
+for suite in suites:
+    for value in values:
+        cards.append(Card(suite, value))
 
-def main_menu():
-    time.sleep(1)
-    print("\n1: View balance\n2: View Games\n3: Quit")
-    choice = int(input("\nSelection: "))
-    return choice
+random.shuffle(cards)
 
-
-def check_value(x):
-    match x:
-        case 1:
-            balance_menu()
-        case 2:
-            game_menu()
-        case 3:
-            app_quit()
-
-
-def balance_menu():
-    pass
-
-
-def game_menu():
-    pass
-
-
-def app_quit():
-    message = "Thanks for Visiting Starlight City Casino"
-    message_length = len(message)
-    symbol_row = "*" * message_length
-    print(f"\n{symbol_row}\n{message}\n{symbol_row}")
-    quit()
-
-
-if __name__ == "__main__":
-    capitol = setup()
-    welcome_statement()
-    option = main_menu()
-    check_value(option)
+for card in cards:
+    card.test()
