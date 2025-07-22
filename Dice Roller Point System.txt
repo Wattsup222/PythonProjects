@@ -1,0 +1,9 @@
+Dice Roller Point System
+
+Raw score from each dice 1 to 1 
+All even - 3 points 
+All odd - 3 points
+All same value - 5 points
+3 consecutive values - 2 points
+3 consecutive values straight - 5 points
+
