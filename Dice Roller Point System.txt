@@ -1,9 +1,11 @@
 Dice Roller Point System
 
 Raw score from each dice 1 to 1 
-All even - 3 points 
-All odd - 3 points
-All same value - 5 points
-3 consecutive values - 2 points
-3 consecutive values straight - 5 points
+Prime Number - 2 points (3 in 8) 
+All even - 2 points (1 in 8)
+All odd - 2 points (1 in 8)
+All same value - 10 points (1 in 36)
+3 consecutive values - 1 points (1 in 6.75)
+3 consecutive values straight - 7 points (1 in 27)
+
 

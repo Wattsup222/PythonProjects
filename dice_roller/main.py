@@ -37,7 +37,7 @@ def closing_statement():
 
 def calculate_score(value_one, value_two, value_three):
     score = Score(value_one, value_two, value_three)
-    score_functions = [score.value_score, score.same_value, score.all_odd, score.all_even, score.consecutive_values]
+    score_functions = [score.value_score, score.is_prime, score.same_value, score.all_odd, score.all_even, score.consecutive_values]
     for functions in score_functions:
         functions()
     player_score = score.get_score()
