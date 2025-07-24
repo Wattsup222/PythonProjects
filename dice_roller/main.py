@@ -37,11 +37,27 @@ def closing_statement():
 
 def calculate_score(value_one, value_two, value_three):
     score = Score(value_one, value_two, value_three)
-    score_functions = [score.value_score, score.is_prime, score.same_value, score.all_odd, score.all_even, score.consecutive_values]
+    score_functions = [score.value_score, score.is_prime, score.same_value, score.all_odd, score.all_even,
+                       score.consecutive_values]
     for functions in score_functions:
         functions()
     player_score = score.get_score()
     print(f"Score: {player_score}")
+
+
+def roll_again():
+    while True:
+        selection = input("Do you want to reroll a dice? (Y/N): ")
+        selection = selection.capitalize()
+        if selection in ("Y", "N"):
+            reroll_dice = input("Which dice do you want to reroll? (1/2/3): ")
+            reroll_dice = int(reroll_dice)
+            if selection in (1,2,3):
+
+            else:
+                print("Invalid Selection")
+        else:
+            print("Invalid Selection")
 
 
 def main():

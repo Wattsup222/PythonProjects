@@ -1,6 +1,3 @@
-from mpmath.libmp import isprime
-
-
 class Score:
     def __init__(self, value_one, value_two, value_three):
         self.value_one = value_one
@@ -13,7 +10,8 @@ class Score:
 
     def is_prime(self):
         roll = self.value_one + self.value_two + self.value_three
-        if isprime(roll):
+        prime_numbers = [3,5,7,11,13,17]
+        if roll in prime_numbers:
             self.score += 2
             print("prime")
 
