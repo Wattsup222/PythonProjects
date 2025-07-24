@@ -17,47 +17,65 @@ def user_selection():
 
 
 def create_dice():
-    die_one = Dice()
-    die_two = Dice()
-    die_three = Dice()
-    return die_one, die_two, die_three
+    dice = []
+    for die in range(3):
+        dice.append(Dice())
+    return dice
 
 
-def roll_dice(die_one, die_two, die_three):
-    value_one = die_one.roll()
-    value_two = die_two.roll()
-    value_three = die_three.roll()
-    print(f"({value_one}, {value_two}, {value_three})")
-    return value_one, value_two, value_three
+def roll_dice(dice):
+    dice_num = 0
+    for die in dice:
+        dice_num += 1
+        die.roll()
+        print(f"Dice {dice_num}: {die.value}")
 
 
-def closing_statement():
-    print("Thanks for playing Dice Roller!")
-
-
-def calculate_score(value_one, value_two, value_three):
-    score = Score(value_one, value_two, value_three)
+def calculate_score(dice):
+    score = Score(dice)
     score_functions = [score.value_score, score.is_prime, score.same_value, score.all_odd, score.all_even,
                        score.consecutive_values]
     for functions in score_functions:
         functions()
     player_score = score.get_score()
-    print(f"Score: {player_score}")
+    return player_score
 
 
-def roll_again():
+def roll_again_option():
     while True:
         selection = input("Do you want to reroll a dice? (Y/N): ")
         selection = selection.capitalize()
         if selection in ("Y", "N"):
-            reroll_dice = input("Which dice do you want to reroll? (1/2/3): ")
-            reroll_dice = int(reroll_dice)
-            if selection in (1,2,3):
+            return selection
+        else:
+            print("Invalid Selection")
 
+
+def roll_again():
+    while True:
+        reroll_dice = input("Which dice do you want to reroll? (1/2/3): ")
+        if reroll_dice.isdigit():
+            reroll_dice = int(reroll_dice)
+            if reroll_dice in (1, 2, 3):
+                return reroll_dice
             else:
                 print("Invalid Selection")
         else:
             print("Invalid Selection")
+
+
+def reroll(die, dice):
+    match die:
+        case 1:
+            dice[0].roll()
+        case 2:
+            dice[1].roll()
+        case 3:
+            dice[2].roll()
+
+
+def closing_statement():
+    print("Thanks for playing Dice Roller!")
 
 
 def main():
@@ -65,9 +83,17 @@ def main():
     while True:
         selection = user_selection()
         if selection in "Y":
-            die_one, die_two, die_three = create_dice()
-            value_one, value_two, value_three = roll_dice(die_one, die_two, die_three)
-            calculate_score(value_one, value_two, value_three)
+            dice = create_dice()
+            roll_dice(dice)
+            player_score = calculate_score(dice)
+            placeholder = roll_again_option()
+            if placeholder in "Y":
+                die = roll_again()
+                reroll(die, dice)
+                print(dice[0].value, dice[1].value, dice[2].value)
+                player_score = calculate_score(dice)
+            else:
+                break
         else:
             break
     closing_statement()

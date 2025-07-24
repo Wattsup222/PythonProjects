@@ -1,8 +1,8 @@
 class Score:
-    def __init__(self, value_one, value_two, value_three):
-        self.value_one = value_one
-        self.value_two = value_two
-        self.value_three = value_three
+    def __init__(self, dice):
+        self.value_one = dice[0].value
+        self.value_two = dice[1].value
+        self.value_three = dice[2].value
         self.score = 0
 
     def value_score(self):
