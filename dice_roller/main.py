@@ -3,7 +3,7 @@ from score import Score
 
 
 def opening_statement():
-    print("Welcome to Dice Roller!")
+    print("Welcome to Risky Rollers!")
 
 
 def user_selection():
@@ -17,10 +17,12 @@ def user_selection():
 
 
 def create_dice():
-    dice = []
+    player_dice = []
+    computer_dice = []
     for die in range(3):
-        dice.append(Dice())
-    return dice
+        player_dice.append(Dice())
+        computer_dice.append(Dice())
+    return player_dice, computer_dice
 
 
 def roll_dice(dice):
@@ -83,15 +85,15 @@ def main():
     while True:
         selection = user_selection()
         if selection in "Y":
-            dice = create_dice()
-            roll_dice(dice)
-            player_score = calculate_score(dice)
+            player_dice, computer_dice = create_dice()
+            roll_dice(player_dice)
+            player_score = calculate_score(player_dice)
             placeholder = roll_again_option()
             if placeholder in "Y":
                 die = roll_again()
-                reroll(die, dice)
-                print(dice[0].value, dice[1].value, dice[2].value)
-                player_score = calculate_score(dice)
+                reroll(die, player_dice)
+                print(player_dice[0].value, player_dice[1].value, player_dice[2].value)
+                player_score = calculate_score(player_dice)
             else:
                 break
         else:
