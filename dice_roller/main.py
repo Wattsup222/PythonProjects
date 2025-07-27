@@ -26,10 +26,14 @@ def create_dice():
 
 
 def roll_dice(dice):
+    for die in dice:
+        die.roll()
+
+
+def dice_values(dice):
     dice_num = 0
     for die in dice:
         dice_num += 1
-        die.roll()
         print(f"Dice {dice_num}: {die.value}")
 
 
@@ -87,12 +91,13 @@ def main():
         if selection in "Y":
             player_dice, computer_dice = create_dice()
             roll_dice(player_dice)
+            dice_values(player_dice)
             player_score = calculate_score(player_dice)
             placeholder = roll_again_option()
             if placeholder in "Y":
                 die = roll_again()
                 reroll(die, player_dice)
-                print(player_dice[0].value, player_dice[1].value, player_dice[2].value)
+                dice_values(player_dice)
                 player_score = calculate_score(player_dice)
             else:
                 break
