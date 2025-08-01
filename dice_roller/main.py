@@ -1,9 +1,20 @@
 from dice import Dice
 from score import Score
+from utility import generate_name, create_username
 
 
 def opening_statement():
     print("Welcome to Risky Rollers!")
+
+
+def create_name():
+    cpu_name = generate_name()
+    player_name = create_username()
+    return cpu_name, player_name
+
+
+def setup():
+    cpu_name, player_name = create_name()
 
 
 def user_selection():
@@ -89,6 +100,7 @@ def main():
     while True:
         selection = user_selection()
         if selection in "Y":
+            setup()
             player_dice, computer_dice = create_dice()
             roll_dice(player_dice)
             dice_values(player_dice)

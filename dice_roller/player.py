@@ -1,10 +1,5 @@
 class Player:
-    def __init__(self, dice, is_cpu):
+    def __init__(self, dice, name, is_cpu):
         self.dice = dice
+        self.name = name
         self.is_cpu = is_cpu
-
-    def generate_name(self):
-        pass
-
-    def input_name(self):
-        pass
