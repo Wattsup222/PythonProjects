@@ -1,20 +1,11 @@
 from dice import Dice
 from score import Score
+from player import Player
 from utility import generate_name, create_username
 
 
 def opening_statement():
     print("Welcome to Risky Rollers!")
-
-
-def create_name():
-    cpu_name = generate_name()
-    player_name = create_username()
-    return cpu_name, player_name
-
-
-def setup():
-    cpu_name, player_name = create_name()
 
 
 def user_selection():
@@ -27,6 +18,12 @@ def user_selection():
             print("Invalid Selection!")
 
 
+def create_name():
+    cpu_name = generate_name()
+    player_name = create_username()
+    return cpu_name, player_name
+
+
 def create_dice():
     player_dice = []
     computer_dice = []
@@ -34,6 +31,17 @@ def create_dice():
         player_dice.append(Dice())
         computer_dice.append(Dice())
     return player_dice, computer_dice
+
+
+def create_players(player_name, cpu_name, player_dice, computer_dice):
+    player = Player(player_name, player_dice, False)
+    cpu = Player(cpu_name, computer_dice, True)
+
+
+def setup():
+    player_name, cpu_name = create_name()
+    player_dice, computer_dice = create_dice()
+    create_players(player_name, cpu_name, player_dice, computer_dice)
 
 
 def roll_dice(dice):
@@ -101,7 +109,6 @@ def main():
         selection = user_selection()
         if selection in "Y":
             setup()
-            player_dice, computer_dice = create_dice()
             roll_dice(player_dice)
             dice_values(player_dice)
             player_score = calculate_score(player_dice)
