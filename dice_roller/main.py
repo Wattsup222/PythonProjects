@@ -1,6 +1,7 @@
+import time
 from dice import Dice
-from score import Score
 from player import Player
+from score import Score
 from utility import generate_name, create_username
 
 
@@ -19,9 +20,9 @@ def user_selection():
 
 
 def create_name():
-    cpu_name = generate_name()
     player_name = create_username()
-    return cpu_name, player_name
+    cpu_name = generate_name()
+    return player_name, cpu_name
 
 
 def create_dice():
@@ -36,67 +37,34 @@ def create_dice():
 def create_players(player_name, cpu_name, player_dice, computer_dice):
     player = Player(player_name, player_dice, False)
     cpu = Player(cpu_name, computer_dice, True)
+    return player, cpu
 
 
 def setup():
     player_name, cpu_name = create_name()
     player_dice, computer_dice = create_dice()
-    create_players(player_name, cpu_name, player_dice, computer_dice)
+    player, cpu = create_players(player_name, cpu_name, player_dice, computer_dice)
+    return player, cpu
 
 
-def roll_dice(dice):
-    for die in dice:
-        die.roll()
+def display_names(player_name, cpu_name):
+    print(f"\n{player_name} VS {cpu_name}")
+    time.sleep(1.5)
 
 
-def dice_values(dice):
-    dice_num = 0
-    for die in dice:
-        dice_num += 1
-        print(f"Dice {dice_num}: {die.value}")
+def display_score(total_score, raw_score, bonus_score, bonuses):
+    print(f"\nRaw Score: {raw_score}")
+    time.sleep(1)
+    print(f"Bonus Score: {bonus_score}")
+    if bonuses:
+        print(f"Bonuses: ", end='')
+        for bonus in bonuses:
+            print(f"{bonus}, ", end='')
+        print("")
+    time.sleep(1)
+    print(f"Total Score: {total_score}")
+    time.sleep(1)
 
-
-def calculate_score(dice):
-    score = Score(dice)
-    score_functions = [score.value_score, score.is_prime, score.same_value, score.all_odd, score.all_even,
-                       score.consecutive_values]
-    for functions in score_functions:
-        functions()
-    player_score = score.get_score()
-    return player_score
-
-
-def roll_again_option():
-    while True:
-        selection = input("Do you want to reroll a dice? (Y/N): ")
-        selection = selection.capitalize()
-        if selection in ("Y", "N"):
-            return selection
-        else:
-            print("Invalid Selection")
-
-
-def roll_again():
-    while True:
-        reroll_dice = input("Which dice do you want to reroll? (1/2/3): ")
-        if reroll_dice.isdigit():
-            reroll_dice = int(reroll_dice)
-            if reroll_dice in (1, 2, 3):
-                return reroll_dice
-            else:
-                print("Invalid Selection")
-        else:
-            print("Invalid Selection")
-
-
-def reroll(die, dice):
-    match die:
-        case 1:
-            dice[0].roll()
-        case 2:
-            dice[1].roll()
-        case 3:
-            dice[2].roll()
 
 
 def closing_statement():
@@ -105,24 +73,16 @@ def closing_statement():
 
 def main():
     opening_statement()
-    while True:
-        selection = user_selection()
-        if selection in "Y":
-            setup()
-            roll_dice(player_dice)
-            dice_values(player_dice)
-            player_score = calculate_score(player_dice)
-            placeholder = roll_again_option()
-            if placeholder in "Y":
-                die = roll_again()
-                reroll(die, player_dice)
-                dice_values(player_dice)
-                player_score = calculate_score(player_dice)
-            else:
-                break
-        else:
-            break
-    closing_statement()
+    player, cpu = setup()
+    display_names(player.name, cpu.name)
+    player.initial_roll()
+    player.dice_values()
+    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
+    display_score(player_total, player_raw, player_bonus, player_bonuses)
+    player.roll_again_option()
+    player.dice_values()
+    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
+    display_score(player_total, player_raw, player_bonus, player_bonuses)
 
 
 if __name__ == "__main__":

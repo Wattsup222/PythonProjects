@@ -6,5 +6,5 @@ class Dice:
         self.value = 0
 
     def roll(self):
-        self.value = random.randrange(1, 7)
+        self.value = random.randint(1, 6)
         return self.value
