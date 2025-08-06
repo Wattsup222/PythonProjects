@@ -1,16 +1,3 @@
-from random import choice
-
-
-def generate_name():
-    file = open("names.txt", 'r')
-    read = file.readlines()
-    names = []
-    for line in read:
-        names.append(line.strip())
-    file.close()
-    return choice(names)
-
-
 def create_username():
     while True:
         username = input("Input a username: ")
