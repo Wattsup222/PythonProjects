@@ -68,9 +68,9 @@ def display_score(total_score, raw_score, bonus_score, bonuses):
 
 def display_winner(player_total, cpu_total, player_name, cpu_name):
     if player_total > cpu_total:
-        print(f"{player_name} defeats {cpu_name} and takes Risky Rollers")
+        print(f"{player_name} defeats {cpu_name} and takes Risky Rollers!")
     elif cpu_total > player_total:
-        print(f"{cpu_name} defeats {player_name} and takes Risky Rollers")
+        print(f"{cpu_name} defeats {player_name} and takes Risky Rollers!")
     else:
         print("Its a draw")
     time.sleep(2)
