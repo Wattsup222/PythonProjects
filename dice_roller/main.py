@@ -66,8 +66,18 @@ def display_score(total_score, raw_score, bonus_score, bonuses):
     time.sleep(1)
 
 
+def display_winner(player_total, cpu_total, player_name, cpu_name):
+    if player_total > cpu_total:
+        print(f"{player_name} defeats {cpu_name} and takes Risky Rollers")
+    elif cpu_total > player_total:
+        print(f"{cpu_name} defeats {player_name} and takes Risky Rollers")
+    else:
+        print("Its a draw")
+    time.sleep(2)
+
+
 def closing_statement():
-    print("Thanks for playing Dice Roller!")
+    print("Thanks for playing Risky Rollers!")
 
 
 def main():
@@ -86,6 +96,8 @@ def main():
     cpu.dice_values()
     cpu_total, cpu_raw, cpu_bonus, cpu_bonuses = Score(cpu.dice).calculate_score()
     display_score(cpu_total, cpu_raw, cpu_bonus, cpu_bonuses)
+    display_winner(player_total, cpu_total, player.name, cpu.name)
+    closing_statement()
 
 
 if __name__ == "__main__":
