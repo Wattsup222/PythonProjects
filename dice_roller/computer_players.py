@@ -3,10 +3,13 @@ import random
 
 
 class Static(Player):
-    pass
+    def __init__(self, dice):
+        super().__init__("Static Steve", dice)
 
 
 class Random(Player):
+    def __init__(self, dice):
+        super().__init__("Random Ronny", dice)
 
     def select_dice(self):
         die = random.randint(1, 3)

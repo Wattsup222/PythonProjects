@@ -1,3 +1,4 @@
+import random
 import time
 from dice import Dice
 from score import Score
@@ -33,22 +34,48 @@ def create_dice():
         computer_dice.append(Dice())
     return player_dice, computer_dice
 
-def 
 
-def create_players(player_name, player_dice, computer_dice):
+def create_cpu_player(computer_dice):
+    cpu_players = [Static, Random]
+    chosen_player = random.choice(cpu_players)
+    cpu_player = chosen_player(computer_dice)
+    return cpu_player
+
+
+def create_user_player(player_name, player_dice):
     player = User(player_name, player_dice)
-    cpu_player = Static("Static Steve", computer_dice)
-    return player, cpu_player
+    return player
 
 
 def setup():
     player_name = get_username()
     player_dice, computer_dice = create_dice()
-    player, cpu = create_players(player_name, player_dice, computer_dice)
+    player = create_user_player(player_name, player_dice)
+    cpu = create_cpu_player(computer_dice)
     return player, cpu
 
 
-def display_names(player_name, cpu_name):
+def user_functions(player):
+    player.initial_roll()
+    player.dice_values()
+    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
+    display_score(player_total, player_raw, player_bonus, player_bonuses)
+    player.roll_again_option()
+    player.dice_values()
+    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
+    display_score(player_total, player_raw, player_bonus, player_bonuses)
+    return player_total
+
+
+def static_steve_functions():
+    pass
+
+
+def random_ronny_functions():
+    pass
+
+
+def display_matchup(player_name, cpu_name):
     print(f"\n{player_name} VS {cpu_name}")
     time.sleep(1.5)
 
@@ -84,16 +111,9 @@ def closing_statement():
 def main():
     opening_statement()
     player, cpu = setup()
-    display_names(player.name, cpu.name)
-    player.initial_roll()
+    display_matchup(player.name, cpu.name)
+    player_total = user_functions(player)
     cpu.initial_roll()
-    player.dice_values()
-    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
-    display_score(player_total, player_raw, player_bonus, player_bonuses)
-    player.roll_again_option()
-    player.dice_values()
-    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
-    display_score(player_total, player_raw, player_bonus, player_bonuses)
     cpu.dice_values()
     cpu_total, cpu_raw, cpu_bonus, cpu_bonuses = Score(cpu.dice).calculate_score()
     display_score(cpu_total, cpu_raw, cpu_bonus, cpu_bonuses)
