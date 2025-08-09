@@ -2,7 +2,7 @@ import time
 from dice import Dice
 from score import Score
 from user import User
-from computer_players import Static
+from computer_players import Static, Random
 from utility import create_username
 
 
@@ -33,10 +33,11 @@ def create_dice():
         computer_dice.append(Dice())
     return player_dice, computer_dice
 
+def 
 
 def create_players(player_name, player_dice, computer_dice):
     player = User(player_name, player_dice)
-    cpu_player = Static("Static Spinner", computer_dice)
+    cpu_player = Static("Static Steve", computer_dice)
     return player, cpu_player
 
 
