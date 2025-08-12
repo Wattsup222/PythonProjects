@@ -4,6 +4,7 @@ from dice import Dice
 from score import Score
 from user import User
 from computer_players import Static, Random
+from roll_off import RollOff
 from utility import create_username
 
 
@@ -60,19 +61,29 @@ def user_functions(player):
     player.dice_values()
     player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
     display_score(player_total, player_raw, player_bonus, player_bonuses)
-    player.roll_again_option()
-    player.dice_values()
-    player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
-    display_score(player_total, player_raw, player_bonus, player_bonuses)
+    roll_again = player.roll_again_option()
+    if roll_again:
+        player.dice_values()
+        player_total, player_raw, player_bonus, player_bonuses = Score(player.dice).calculate_score()
+        display_score(player_total, player_raw, player_bonus, player_bonuses)
     return player_total
 
 
-def static_steve_functions():
-    pass
+def cpu_functions(cpu):
+    cpu.initial_roll()
+    cpu.dice_values()
+    cpu_total, cpu_raw, cpu_bonus, cpu_bonuses = Score(cpu.dice).calculate_score()
+    display_score(cpu_total, cpu_raw, cpu_bonus, cpu_bonuses)
+    if cpu.name == "Random Ronny":
+        random_ronny_functions(cpu)
+        cpu.dice_values()
+        cpu_total, cpu_raw, cpu_bonus, cpu_bonuses = Score(cpu.dice).calculate_score()
+        display_score(cpu_total, cpu_raw, cpu_bonus, cpu_bonuses)
+    return cpu_total
 
 
-def random_ronny_functions():
-    pass
+def random_ronny_functions(cpu):
+    cpu.select_dice()
 
 
 def display_matchup(player_name, cpu_name):
@@ -90,7 +101,7 @@ def display_score(total_score, raw_score, bonus_score, bonuses):
             print(f"{bonus}, ", end='')
         print("")
     time.sleep(1)
-    print(f"Total Score: {total_score}")
+    print(f"Total Score: {total_score}\n")
     time.sleep(1)
 
 
@@ -101,7 +112,15 @@ def display_winner(player_total, cpu_total, player_name, cpu_name):
         print(f"{cpu_name} defeats {player_name} and takes Risky Rollers!")
     else:
         print("Its a draw")
+        roll_off(player_name, cpu_name)
     time.sleep(2)
+
+
+def roll_off(player_name, cpu_name):
+    player_dice = Dice()
+    cpu_dice = Dice()
+    tie_break = RollOff(player_dice, cpu_dice, player_name, cpu_name)
+    tie_break.showdown()
 
 
 def closing_statement():
@@ -113,10 +132,7 @@ def main():
     player, cpu = setup()
     display_matchup(player.name, cpu.name)
     player_total = user_functions(player)
-    cpu.initial_roll()
-    cpu.dice_values()
-    cpu_total, cpu_raw, cpu_bonus, cpu_bonuses = Score(cpu.dice).calculate_score()
-    display_score(cpu_total, cpu_raw, cpu_bonus, cpu_bonuses)
+    cpu_total = cpu_functions(cpu)
     display_winner(player_total, cpu_total, player.name, cpu.name)
     closing_statement()
 

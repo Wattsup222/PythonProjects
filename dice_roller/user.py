@@ -31,8 +31,8 @@ class User(Player):
             selection = selection.capitalize()
             if selection in "Y":
                 self.roll_again()
-                break
+                return True
             elif selection in "N":
-                break
+                return False
             else:
                 print("Invalid Selection")
