@@ -3,3 +3,10 @@ class GeoAPI:
         self.base_url = base_url
         self.key = key
         self.city = city
+
+
+    def access_data(self):
+        pass
+
+    def get_location(self):
+        pass
