@@ -43,14 +43,19 @@ def result(state, max_turns, random_number, current_turn):
     outcome.handle_outcome()
 
 
+def game_loop(player_number, current_turn, random_number, max_turns):
+    input_number, player_number = get_user_number(player_number)
+    current_turn += 1
+    state = response(input_number, random_number, max_turns, current_turn)
+    modify_lowest_highest(state, player_number, input_number)
+    return state, current_turn
+
+
 def main():
     current_turn, max_turns, player_number, random_number = setup()
     state = 0
     while current_turn != max_turns and state != 1:
-        input_number, player_number = get_user_number(player_number)
-        current_turn += 1
-        state = response(input_number, random_number, max_turns, current_turn)
-        modify_lowest_highest(state, player_number, input_number)
+        state, current_turn = game_loop(player_number, current_turn, random_number, max_turns)
     result(state, max_turns, random_number, current_turn)
 
 
