@@ -8,5 +8,9 @@ class Player:
     def card_total(self):
         total = 0
         for card in self.cards:
-                total += card.get_numeric_value()
+                value = card.get_string_value()
+                if value == "A" and total >= 11:
+                    total += 1
+                else:
+                    total += card.get_numeric_value()
         return total

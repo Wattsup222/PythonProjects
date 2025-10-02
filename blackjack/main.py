@@ -41,7 +41,8 @@ def main():
     shuffled_deck_of_cards = shuffle_deck(deck_of_cards)
     card_one, card_two = player_starting_hand(shuffled_deck_of_cards)
     player = create_player(card_one, card_two)
-
+    total = player.card_total()
+    print(total)
 
 
 if __name__ == '__main__':
